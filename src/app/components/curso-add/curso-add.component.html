@@ -1,0 +1,55 @@
+<div class="container">
+  <h2>Agregar un Curso</h2>
+  <form (ngSubmit)="saveCurso()" #cursoForm="ngForm">
+    <div class="form-group">
+      <label for="nombre">Nombre del Curso:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="nombre"
+        name="nombre"
+        [(ngModel)]="curso.nombre"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="fechaInicio">Fecha de Inicio:</label>
+      <input
+        type="text"
+        class="form-control datepicker"
+        id="fechaInicio"
+        name="fechaInicio"
+        [(ngModel)]="curso.fechaInicio"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+        <label for="temaId">Tema:</label>
+        <select
+            class="form-control"
+            id="temaId"
+            name="temaId"
+            [(ngModel)]="selected_tema">
+            <option *ngFor="let tema of temas" [value]="tema.id">{{ tema.nombre }}</option>
+        </select>
+    </div>
+  
+    
+
+    <div class="form-group">
+      <label for="docenteId">Docente:</label>
+      <select
+        class="form-control"
+        id="docenteId"
+        name="docenteId"
+        [(ngModel)]="curso.idDocente"
+        required
+      >
+        <option *ngFor="let docente of docentes" [value]="docente.id">{{ docente.nombre }}</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+  </form>
+</div>
