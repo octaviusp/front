@@ -1,0 +1,18 @@
+body, html {
+    background-color: white;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    color: #333; /* Establece el color del texto por defecto a un gris oscuro */
+    font-family: Arial, sans-serif;
+}
+
+.navbar, .list-group-item, .container, .btn, .form-control, .input-group-text, .navbar-brand {
+    border-radius: 10px !important; /* Asegura que todos los bordes estén redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para el efecto "flotante" */
+}
+
+.container {
+    background-color: #f7f7f7; /* Un fondo gris claro para el contenedor */
+    padding: 20px;
+}

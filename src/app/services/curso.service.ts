@@ -20,7 +20,9 @@ export class CursoService {
    }
   
   getAll(): Observable<Curso[]> {
-    return this.http.get<Curso[]>(this.url + this.entity);
+    console.log('URL: ', this.url + this.entity)
+    let data = this.http.get<Curso[]>(this.url + this.entity)
+    return data;
   }
 
   get(id: any): Observable<Curso> {

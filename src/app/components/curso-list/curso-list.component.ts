@@ -32,6 +32,9 @@ export class CursoListComponent implements OnInit {
         error: (e) => console.error(e)
       });
   }
+
+
+
   refreshList(): void {
     this.retrieveCursos();
     this.currentElement = {};

@@ -2,10 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CursoService } from 'src/app/services/curso.service';
 import { Curso } from 'src/app/models/curso.model';
-import { Tema } from 'src/app/models/tema.model';
 import { DocenteService } from 'src/app/services/docente.service';
-import { switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { Docente } from 'src/app/models/docente.model';
 
 @Component({
   selector: 'app-curso-details',
@@ -21,8 +19,8 @@ export class CursoDetailsComponent implements OnInit {
     content: ''
   };
 
-  
-  docente_name = "Sin nombre"
+  docentes: Docente[] = []
+  nombreDocente = "Sin nombre"
   message = '';
   constructor(
     private cursoService: CursoService,
@@ -32,43 +30,32 @@ export class CursoDetailsComponent implements OnInit {
   ngOnInit(): void {
     if (!this.viewMode) {
       this.message = '';
+      this.getDocentes();
       this.getElement(this.route.snapshot.params["id"]);
     }
   }
 
-  getDocenteName(id: number): void {
-    this.docenteService.getOne(id).subscribe({
-      next: (docente) => {
-        console.log(docente.nombre)
-        if (id == 0)
-          this.docente_name = "Sin nombre"
-        else
-          this.docente_name = docente.nombre || "Sin nombre"  },
+  getDocentes(): void {
+    this.docenteService.getAll().subscribe({
+      next: (docentes) => {
+        this.docentes = docentes
+      },
       error: (e) => console.error(e)
     }
       
      ) 
-    }
-  
+    
+  }
 
     getElement(id: string): void {
       this.cursoService.get(id)
-        .pipe(
-          switchMap((data: Curso) => {
-
-            this.currentElement = data;
-            
-            if (this.currentElement.idDocente !== undefined && this.currentElement.idDocente !== null) {
-              return this.docenteService.getOne(this.currentElement.idDocente);
-            } else {
-              // Si no hay idDocente, devolvemos un observable con un valor por defecto
-              return of({ nombre: "Sin nombre" });
-            }
-          })
-        )
         .subscribe({
-          next: (docente) => {
-            this.docente_name = docente.nombre || "Sin nombre";
+          next: (curso) => {
+            let docente = this.docentes.find(x => x.id == curso.idDocente)
+            if (docente)
+              this.nombreDocente = docente.nombre || "Without"
+              this.currentElement = curso;
+
           },
           error: (e) => console.error(e)
         });

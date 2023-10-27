@@ -8,7 +8,7 @@ import Config from 'src/config/config';
   providedIn: 'root'
 })
 
-export class DocenteService { // Cambia el nombre del servicio si es necesario
+export class DocenteService {
 
   url = "";
   entity = "docentes"; // Ajusta el nombre de la entidad según tu API
@@ -25,5 +25,16 @@ export class DocenteService { // Cambia el nombre del servicio si es necesario
     return this.http.get<Docente>(`${this.url + this.entity + "/" + id}`);
   }
 
+  delete(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.url + this.entity + "/" + id}`);
+  }
+
+  deleteAll(docentes: Docente[]): Observable<any> {
+    return this.http.delete<any>(`${this.url + this.entity}`, { body: docentes });
+  }
+
+  create(docente: Docente): Observable<any> {
+    return this.http.post<any>(`${this.url + this.entity}`, docente);
+  }
   // Puedes agregar métodos adicionales según tus necesidades, como búsqueda por nombre, etc.
 }
